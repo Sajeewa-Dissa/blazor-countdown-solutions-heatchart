@@ -1,0 +1,92 @@
+﻿@media (min-width: 801px) {
+    .mainContainer {
+        display: flex;
+        flex-direction: row;
+        background-color: burlywood;
+        height: 75vh;
+        max-height: 78vh;
+        margin-top: 20px;
+    }
+
+    .imageContainer {
+        display: grid;
+        grid-template-columns: 2fr 3fr;
+        grid-template-rows: 3fr 4fr auto;
+        height: 75vh;
+        max-height: 78vh;
+        background: url("/images/bot85.png") no-repeat;
+        background-size: contain;
+    }
+
+
+    .centerPane {
+        display: flex;
+        flex-direction: row;
+        padding-left: 20px;
+    }
+
+    .welcomePane {
+        background-color: chocolate;
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr 1fr;
+    }
+
+    .resultsPane {
+        background-color: chocolate;
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 6fr;
+        align-items: end;
+        align-content: end;
+    }
+
+    .gridContainer {
+        background-color: aquamarine;
+        min-width: 924px;
+        min-height: 592px;
+        max-width: 924px;
+        max-height: 592px;
+    }
+
+    .instructionPara {
+        background-color: chartreuse;
+        font-size: larger;
+        font-weight: 700;
+    }
+}
+
+
+/**************************************************************************/
+@media (max-width: 800px) {
+    .mainContainer {
+        display: flex;
+        flex-direction: column;
+        background-color: burlywood;
+        margin-top: 20px;
+    }
+
+    .imageContainer {
+        display: grid;
+        grid-template-columns: 2fr 3fr;
+        grid-template-rows: 3fr 4fr auto;
+        height: 75vh;
+        max-height: 78vh;
+        background: url("/images/bot85.png") no-repeat;
+        background-size: contain;
+    }
+
+    .centerPane {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .welcomePane {
+        display: none;
+    }
+
+    .gridContainer {
+        background-color: aquamarine;
+        min-width: max-content;
+    }
+}

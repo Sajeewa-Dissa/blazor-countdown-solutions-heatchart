@@ -1,0 +1,36 @@
+﻿.miniDraggable {
+    margin: 2px;
+    border: 1px solid #424d5c;
+    cursor: grab;
+    background-color: dodgerblue;
+    color: white;
+    text-align: center;
+    vertical-align: middle;
+    justify-content: center;
+    align-content: center;
+    border-radius: 4px;
+    width: 30px;
+    height: 30px;
+}
+
+    .miniDraggable:active {
+        cursor: grabbing;
+    }
+
+.miniDragging {
+    cursor: grabbing;
+}
+
+.miniCaption {
+    font-size: 14px;
+    color: white;
+}
+
+.miniDropzone {
+    padding: 4px;
+    background-color: black;
+    border: 1px dashed #75868a;
+    border-radius: 4px;
+    min-height: 44px;
+    list-style: none;
+}

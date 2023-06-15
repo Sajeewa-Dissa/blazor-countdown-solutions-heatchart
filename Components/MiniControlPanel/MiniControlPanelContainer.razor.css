@@ -1,0 +1,20 @@
+﻿.miniControlPanel-wrapper {
+    min-width: 214px;
+    max-width: 214px;
+    min-height: 385px;
+    max-height: 385px;
+}
+
+    .miniControlPanel-wrapper > div {
+        display: flex;
+        flex-direction: column;
+    }
+
+#smallMiniTiles {
+    min-height: 113px;
+}
+
+
+#chosenMiniTiles span {
+    color:white;
+}

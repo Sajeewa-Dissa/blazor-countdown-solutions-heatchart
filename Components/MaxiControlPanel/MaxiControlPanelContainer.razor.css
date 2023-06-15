@@ -1,0 +1,26 @@
+﻿.maxiControlPanel-wrapper {
+    background-color:lightpink;
+}
+
+.maxiControlPanel-wrapper > div {
+    display: flex;
+    flex-direction: column;
+    max-width: 332px;
+    /*justify-content: space-around;*/
+}
+
+#smallMaxiTiles {
+    min-height: 150px;
+}
+
+
+#chosenMaxiTiles {
+    max-width: 292px;
+    background-color: aliceblue;
+}
+
+
+#chosenMaxiTiles span {
+    color: slategray;
+    width: 280px;
+}

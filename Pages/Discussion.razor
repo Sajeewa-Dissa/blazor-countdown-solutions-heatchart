@@ -1,0 +1,55 @@
+﻿@page "/discussion"
+
+<PageTitle>Credits</PageTitle>
+
+<h2>Discussion</h2>
+
+<main>
+    <p>My original source code is available at <a href="//github.com/Sajeewa-Dissa/blazor-countdown-solutions-heatchart" target="_blank">github.com/Sajeewa-Dissa/blazor-countdown-solutions-heatchart</a></p>
+
+    <p>This app shows all the possible and impossible targets for a given combinations of six chosen numbers in the Countdown Numbers game (Channel 4 TV).</p>
+
+    <p>The app has no JavaScript in the UI; all page scripting and styling is in Blazor razor pages and css alone.
+    The app does not call any specific APIs nor parse any JSON. Services can be called seamlessly and parse POCO classes.
+    Messaging, UI updates and event handling are done over a lightweight SignalR connection using the WebSockets protocol. These are just some of the 
+    powerful features of Blazor.
+    </p>
+
+    <p>Being a Blazor Server App, it is executed on the server within ASP.NET Core. If this app were to be released in six months time (i.e. after November 2023),
+    it could even be packaged as a client-side Blazor Web Assembly (WASM) app with multi-threading support! Being an app that uses parallel task threading to brute-force
+    solutions for the Countdown Numbers game was the primary reason for choosing Blazor Server over WASM, but actually, 
+    the number solving algorithm will run as-is on a single thread and solve all combinations of the chosen numbers in several seconds.
+    Even today, as a Blazor WASM app, it could be developed into a Progressive Web App (PWA) running purely in an offline mode. As such it could be hosted on a
+    static site. These are some of the possibilities of Blazor which is still a developing technology (watch out for Blazor United coming soon).
+    </p>
+
+    <p>This app would not be possible without a suitable number-crunching algorithm, and I am grateful to have found 
+    <cite><a href="https://www.codeproject.com/Articles/740035/Countdown-Number-Puzzle-Solver">this</a> article by David Hancock</cite> which solves this exact problem.
+    I have used most of the algorithm in its original form, only updating the aggregation mechanism to use C# concurrent bags and concurrent dictionaries (instead of 
+    aggregating all data from the various threads as a separate step). I also updated the code to solve all numbers between 100 and 999 instead of a specific target value;
+    being a brute-force mechanism, it is doing almost the same tasks anyway. Also, I have created two related methods in the service that is injected. One method solves
+    all targets (to populate the initial heatchart grid) and the other solves an individual target (to populate the modal-dialog when a heatchart grid-item is clicked). Even though this has the effect 
+    of repeating the work done, it is the simplest way to avoid having a payload that returns all solutions for all targets, where perhaps several hundred-thousand unique solutions would be
+    saved and downloaded on a single button click!
+    </p>
+
+    <p>One feature of the solving algorithm I would like to improve is a mechanism to remove duplicate solutions, and thereby give a more accurate
+    value for the actual number of possible solutions. In the present algorithm, "75+50" is correctly considered as a duplicate of "50+75".
+    But "1+75+50-1" is considered distinct from "75+1+50-1". In fact the associative property of addition and multiplication could be used to
+    perhaps quarter the number of actual "solutions", although the very definition of what constitutes uniqueness in an arithmetic function is somewhat subjective.
+    </p>
+
+    <h4>Ideas For Further Improvements</h4>
+
+    <ul>
+        <li>Change the solution-finding algorithm to reduce the number of duplicate solutions</li>
+        <li>Re-work this app as a multi-threaded client-side WASM when the technology allows</li>
+        <li>Make the app properly responsive for mobile devices with special attention to drag-drop and scrolling. It currently has a basic responsive layout only. </li>
+    </ul>
+
+</main>
+
+
+@code {
+
+}

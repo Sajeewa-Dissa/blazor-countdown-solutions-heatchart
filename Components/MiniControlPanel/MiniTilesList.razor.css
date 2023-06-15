@@ -1,0 +1,55 @@
+﻿minitile-status {
+    display: flex;
+    flex-direction: column;
+}
+
+.minitile-status ul {
+    display: grid;
+    background-color: antiquewhite;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    align-content: start;
+}
+
+.miniDropzone {
+    padding: 4px;
+    background-color: black;
+    border: 1px dashed #75868a;
+    border-radius: 4px;
+    min-height: 44px;
+    list-style: none;
+}
+
+    .miniDropzone span {
+        color: slategray;
+        width: 210px;
+    }
+
+
+#chosenMiniTiles {
+    max-width: 214px;
+    background-color: aliceblue;
+}
+
+
+#smallMiniTiles {
+    min-height: 148px;
+}
+
+.no-minidrop {
+    padding: 1px;
+    border: 3px outset red;
+    border-color: rgb(255 0 0 / .5);
+}
+
+.can-minidrop {
+    padding: 1px;
+    border: 3px outset green;
+}
+
+.minitile-status > div > h5 {
+    font: bolder;
+    margin: 0;
+    background-color: pink;
+}
+
+

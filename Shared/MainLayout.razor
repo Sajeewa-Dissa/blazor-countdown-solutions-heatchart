@@ -1,0 +1,26 @@
+﻿@inherits LayoutComponentBase
+
+<PageTitle>BlazrCountdownApp</PageTitle>
+
+<BlazoredToasts Position="ToastPosition.BottomCenter" Timeout="5" InfoIcon="oi oi:info" SuccessIcon="oi oi:check" WarningIcon="oi oi:warning" ErrorIcon="oi oi:x" />
+
+<div class="page">
+    <div class="sidebar">
+        <NavMenu />
+    </div>
+
+    <main>
+        <div class="top-row px-4">
+            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
+        </div>
+
+        <article class="content px-4">
+            @Body
+        </article>
+
+        <footer>
+            <hr />
+            <span>&copy; <small>@DateTime.Now.Year Sajeewa Dissanayake</small></span>
+        </footer>
+    </main>
+</div>

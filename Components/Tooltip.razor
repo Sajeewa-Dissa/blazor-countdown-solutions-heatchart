@@ -1,0 +1,11 @@
+﻿@namespace BlazrCountdownApp.Components
+
+<div class="tooltip-wrapper">
+    <span>@Text</span>
+    @ChildContent
+</div>
+
+@code {
+    [Parameter] public required RenderFragment ChildContent { get; set; }
+    [Parameter] public required string Text { get; set; }
+}

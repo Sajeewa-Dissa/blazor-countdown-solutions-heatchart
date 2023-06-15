@@ -1,0 +1,146 @@
+﻿@page "/"
+
+<PageTitle>Countdown Heatchart</PageTitle>
+
+<h2>Countdown Solutions Heatchart</h2>
+
+<h5>Countdown Numbers Game Solutions Heatchart in Blazor Server</h5>
+
+<div class="mainContainer">
+    @*<Note the first line below embeds a ControlPanel component and sets its onStatusUpdated event to execute the HandleStatusUpdated method ">*@
+
+    @*<MaxiControlPanelContainer Tiles="Tiles" onStatusUpdated="HandleStatusUpdated" SolveButtonClicked="@SolveButtonClickedHandler" ResetButtonClicked="@ResetButtonClickedHandler">
+        <MaxiTilesList Title="Large Tiles" ListStatus="TileStatusEnum.UnchosenLarge" AllowedStatuses="@(new TileStatusEnum[] {TileStatusEnum.ChosenLarge})" />
+        <MaxiTilesList Id="smallMaxiTiles" Title="Small Tiles" ListStatus="TileStatusEnum.UnchosenSmall" AllowedStatuses="@(new TileStatusEnum[] {TileStatusEnum.ChosenSmall})" />
+        <MaxiTilesList Id="chosenMaxiTiles" ListStatus="TileStatusEnum.Chosen" DefaultEmptyMessage="Drag and drop to add six tiles here" AllowedStatuses="@(new TileStatusEnum[] {TileStatusEnum.UnchosenSmall, TileStatusEnum.UnchosenLarge})" />
+    </MaxiControlPanelContainer>*@
+
+    <div class="imageContainer">
+        <div></div>
+        <div></div>
+        <div></div>
+        <MiniControlPanelContainer Tiles="Tiles" onStatusUpdated="HandleStatusUpdated" SolveButtonClicked="@SolveButtonClickedHandler" ResetButtonClicked="@ResetButtonClickedHandler">
+            <MiniTilesList Title="Large Tiles" ListStatus="TileStatusEnum.UnchosenLarge" AllowedStatuses="@(new TileStatusEnum[] {TileStatusEnum.ChosenLarge})" />
+            <MiniTilesList Id="smallMiniTiles" Title="Small Tiles" ListStatus="TileStatusEnum.UnchosenSmall" AllowedStatuses="@(new TileStatusEnum[] {TileStatusEnum.ChosenSmall})" />
+            <MiniTilesList Id="chosenMiniTiles" ListStatus="TileStatusEnum.Chosen" DefaultEmptyMessage="Drag and drop six tiles here" AllowedStatuses="@(new TileStatusEnum[] {TileStatusEnum.UnchosenSmall, TileStatusEnum.UnchosenLarge})" />
+        </MiniControlPanelContainer>
+        <div></div>
+        <div>&nbsp;</div>
+    </div>
+
+    <div class="centerPane">
+        @if (!ShowResults && !ShowResults2)
+        {
+        <div class="welcomePane">
+                <div>&nbsp;</div>
+                <div class="instructionPara">
+                    <p>This app solves the Countdown Numbers game (Channel 4 TV).<br>
+                        Please choose six tiles and click the Solve All button.<br>
+                        The app will calculate all possible Countdown solutions that obtain a target from 100 to 999.
+                    </p>
+                </div>
+                <div>&nbsp;</div>
+            </div>
+        }
+
+        @if (ShowResults)
+        {
+        <div class="resultsPane">
+            <div>&nbsp;</div>
+            <div class="gridContainer">
+                <ResultsGrid ChosenTileValues="@chosenTileValues" />
+            </div>
+        </div>
+        }
+        @if (ShowResults2)
+        {
+        <div class="resultsPane">
+            <div>&nbsp;</div>
+            <div class="gridContainer">
+                <ResultsGrid ChosenTileValues="@chosenTileValues" />
+            </div>
+        </div>
+        }
+    </div>
+
+</div>
+
+
+
+
+@code {
+    List<TileModel>? Tiles;
+
+    private bool ShowResults { get; set; } = false;
+    private bool ShowResults2 { get; set; } = false;
+
+    private int[]? chosenTileValues;
+
+    protected override void OnInitialized()
+    {
+        SetInitialControlPanel();
+    }
+
+    protected void SetInitialControlPanel()
+    {
+        //tiles will sort themselves by Id automatically, so add them in number descending order so that foreach loops will increment this id. 
+        int[] largeNumbers = { 100, 75, 50, 25 };
+        int[] smallNumbers = { 10, 10, 9, 9, 8, 8, 7, 7, 6, 6, 5, 5, 4, 4, 3, 3, 2, 2, 1, 1 };
+        int counter = 0;
+        Tiles = new List<TileModel>();
+
+        foreach (var item in largeNumbers)
+        {
+            counter++;
+            Tiles.Add(new TileModel
+                {
+                    Id = counter,
+                    Caption = item.ToString(),
+                    Status = TileStatusEnum.UnchosenLarge,
+                    Type = TileTypeEnum.Large
+                });
+        }
+
+        foreach (var item in smallNumbers)
+        {
+            counter++;
+            Tiles.Add(new TileModel
+                {
+                    Id = counter,
+                    Caption = item.ToString(),
+                    Status = TileStatusEnum.UnchosenSmall,
+                    Type = TileTypeEnum.Small
+                });
+        }
+    }
+
+    protected void SolveButtonClickedHandler(int[] chosenValues)
+    {
+        chosenTileValues = chosenValues;
+
+        //refresh results via a simple toggle;
+        if ((!ShowResults && !ShowResults2) || (!ShowResults && ShowResults2))
+        {
+            ShowResults2 = false;
+            ShowResults = true;
+        }
+        else
+        {
+            ShowResults = false;
+            ShowResults2 = true;
+        }
+    }
+
+    protected void ResetButtonClickedHandler()
+    {
+        ShowResults = false;
+        ShowResults2 = false;
+        SetInitialControlPanel();
+    }
+
+    void HandleStatusUpdated(TileModel updatedTile)
+    {
+        //InvokeAsync(StateHasChanged);
+    }
+
+}

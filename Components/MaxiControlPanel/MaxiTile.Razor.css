@@ -1,0 +1,47 @@
+﻿.maxiDraggable {
+    margin: 3px;
+    border: 1px solid #424d5c;
+    cursor: grab;
+    background-color: dodgerblue;
+    color: white;
+    text-align: center;
+    vertical-align: middle;
+    justify-content: center;
+    align-content: center;
+    border-radius: 5px;
+    width: 40px;
+    height: 40px;
+}
+
+    .maxiDraggable:active {
+        cursor: grabbing;
+    }
+
+.maxiDragging {
+    cursor: grabbing;
+}
+
+.maxiCaption {
+    font-size: 18px;
+    color: white;
+}
+
+.maxiDropzone {
+    padding: 5px;
+    background-color: black;
+    border: 1px dashed #75868a;
+    border-radius: 5px;
+    min-height: 58px;
+    list-style: none;
+}
+
+/*.no-maxidrop {
+    padding: 1px;
+    border: 4px outset red;
+    border-color: rgb(255 0 0 / .5);
+}
+
+.can-maxidrop {
+    padding: 1px;
+    border: 4px outset green;
+}*/

@@ -1,0 +1,51 @@
+﻿body {
+    font-size:smaller;
+}
+
+
+div.p-3 {
+    background-color: #ddd;
+}
+
+ul {
+    columns: 5;
+    -webkit-columns: 5;
+    -moz-columns: 5;
+}
+
+/**************************************************************************/
+@media (max-width: 1600px) {
+    ul {
+        columns: 4;
+        -webkit-columns: 4;
+        -moz-columns: 4;
+    }
+}
+
+
+/**************************************************************************/
+@media (max-width: 1200px) {
+    ul {
+        columns: 3;
+        -webkit-columns: 3;
+        -moz-columns: 3;
+    }
+}
+
+/**************************************************************************/
+@media (max-width: 1000px) {
+    ul {
+        columns: 2;
+        -webkit-columns: 2;
+        -moz-columns: 2;
+    }
+}
+
+/**************************************************************************/
+@media (max-width: 700px) {
+    ul {
+        columns: 1;
+        -webkit-columns: 1;
+        -moz-columns: 1;
+    }
+}

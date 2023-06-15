@@ -1,0 +1,63 @@
+﻿@inject ICountdownService CountdownService
+
+<div class="p-3" @ref="thisRef" tabindex="0" @onkeydown="HandleKeyDown">
+
+    <div class="mb-3 display-6 border-bottom">
+        Solutions for target @Target @summaryMsg items)
+    </div>
+
+    <ul>
+        @foreach (var item in listModel)
+        {
+            <li>@item</li>
+        }
+    </ul>
+
+    <div class="mb-3 text-end">
+        <button type="button" class="btn btn-primary" @onclick=Close>Exit</button>
+    </div>
+
+</div>
+
+
+@code {
+    [Parameter] public required int[] Numbers { get; set; }
+    [Parameter] public int Target { get; set; }
+    [Parameter] public int NumberOfSolutions { get; set; }
+    [CascadingParameter] private IModalDialogContext? Modal { get; set; }
+
+    private List<string> listModel = new();
+    private string? summaryMsg;
+
+    private ElementReference thisRef;
+    private string? pressedKey;
+
+    protected override async Task OnInitializedAsync()
+    {
+        ArgumentNullException.ThrowIfNull(Modal);
+        listModel = (await this.CountdownService.ExecuteSolveTargetTake50Async(this.Numbers, this.Target)).ToList();
+        summaryMsg = NumberOfSolutions > 50 ? $" (first 50 only of {NumberOfSolutions}" : $" ({NumberOfSolutions}";
+    }
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await thisRef.FocusAsync();
+        }
+    }
+
+
+    private void HandleKeyDown(KeyboardEventArgs e)
+    {
+        if(e.Key == "Escape")
+        {
+            Close();
+        }
+    }
+
+    
+    private void Close()
+        =>  this.Modal?.Close(ModalResult.OK());
+}

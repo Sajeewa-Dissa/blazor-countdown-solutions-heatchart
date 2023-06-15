@@ -1,0 +1,57 @@
+﻿@namespace BlazrCountdownApp.Components
+
+<div class="maxiControlPanel-wrapper">
+    <div>
+        <CascadingValue Value="this">
+            @ChildContent
+        </CascadingValue>
+    </div>
+    <button class="btn btn-primary" @onclick="OnSolveButtonClicked" disabled="@IsSolveDisabled">Solve All</button>
+    <button class="btn btn-primary" @onclick="OnResetButtonClicked">Reset Page</button>
+</div>
+
+
+
+@code {
+    [Parameter] required public List<TileModel> Tiles { get; init; }
+    [Parameter] public RenderFragment? ChildContent { get; init; }
+    [Parameter] public EventCallback<TileModel> onStatusUpdated { get; init; }
+    [Parameter] public EventCallback ResetButtonClicked { get; init; }
+    [Parameter] public EventCallback<int[]> SolveButtonClicked { get; init; } //Blazor EventCallback<T> is a single-cast event handler. Can't subscribe to multiple events.
+                                                                              //.Net event delegates are classes but this is a [non-null] struct.
+
+    public required TileModel Payload { get; set; }
+    public int ChosenCount { get; set; }
+    public required int[] ChosenTilesValues { get; set; }
+    public bool IsSolveDisabled { get; set; } = true;
+
+    public async Task UpdateTileAsync(TileStatusEnum newStatus)
+    {
+        var Task = Tiles.SingleOrDefault(x => x.Id == Payload.Id);
+        if (Task is not null)
+        {
+            if(newStatus == TileStatusEnum.Chosen)
+            {
+                Task.Status = Task.Type == TileTypeEnum.Small ? TileStatusEnum.ChosenSmall : TileStatusEnum.ChosenLarge;
+            }
+            else //the tile has been unchosen.
+            {
+                Task.Status = Task.Type == TileTypeEnum.Small ? TileStatusEnum.UnchosenSmall : TileStatusEnum.UnchosenLarge;
+            }
+            await onStatusUpdated.InvokeAsync(Payload); //emit the event.
+        }
+    }
+
+
+    protected async Task OnSolveButtonClicked()
+    {
+        await SolveButtonClicked.InvokeAsync(ChosenTilesValues);
+    }
+
+    protected async Task OnResetButtonClicked()
+    {
+        IsSolveDisabled = true;
+        await ResetButtonClicked.InvokeAsync(null);
+    }
+
+}

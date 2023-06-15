@@ -1,0 +1,16 @@
+﻿@namespace BlazrCountdownApp.Components
+
+<li class="miniDraggable" draggable="true" title="@TileModel?.Caption" @ondragstart="@(() => HandleDragStart(TileModel!))">
+    <p class="miniCaption">@TileModel?.Caption</p>
+</li>
+
+@code {
+    [CascadingParameter] MiniControlPanelContainer? Container { get; init; }
+    [Parameter] public TileModel? TileModel { get; init; }
+
+    private void HandleDragStart(TileModel selectedTile)
+    {
+        Container!.Payload = selectedTile;
+    }
+
+}

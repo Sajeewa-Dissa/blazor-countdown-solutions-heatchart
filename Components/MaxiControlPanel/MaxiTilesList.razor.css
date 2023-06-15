@@ -1,0 +1,46 @@
+﻿maxitile-status {
+    display: flex;
+    flex-direction: column;
+}
+
+.maxitile-status ul {
+    display: grid;
+    background-color: antiquewhite;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    align-content: start;
+}
+
+.maxiDropzone {
+    padding: 5px;
+    background-color: black;
+    border: 1px dashed #75868a;
+    border-radius: 5px;
+    min-height: 58px;
+    list-style: none;
+}
+
+    .maxiDropzone span {
+        color: slategray;
+        width: 280px;
+    }
+
+
+#chosenMaxiTiles {
+    max-width: 292px;
+    background-color: aliceblue;
+}
+
+#smallMaxiTiles {
+    min-height: 150px;
+}
+
+.no-maxidrop {
+    padding: 1px;
+    border: 4px outset red;
+    border-color: rgb(255 0 0 / .5);
+}
+
+.can-maxidrop {
+    padding: 1px;
+    border: 4px outset green;
+}

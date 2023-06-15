@@ -1,0 +1,159 @@
+﻿@namespace BlazrCountdownApp.Components
+@inject IToastService toastSvc
+
+<div class="maxitile-status">
+    <div>
+        <h5>@Title</h5>
+
+        <ul class="maxiDropzone @dropClass"
+            id="@Id"
+            ondragover="event.preventDefault();"
+            ondragstart="event.dataTransfer.setData('', event.target.id);"
+            @ondrop="HandleDrop"
+            @ondragenter="HandleDragEnter"
+            @ondragleave="HandleDragLeave">
+
+            @foreach (var tile in Tiles)
+            {
+                <MaxiTile TileModel="tile" />
+            }
+            @if (Tiles.Count == 0)
+            {
+                <span>@DefaultEmptyMessage</span>
+            }
+        </ul>
+    </div>
+    <!--NOTE. ondragover is a normal Js event, or it would be @ondragover for a blazor event. The default is to prevent items dropping onto each other.-->
+    <!--This negates that behaviour. Similarly ondragstart is a Js event to be recognised by Firefox, apparently.-->
+</div>
+
+
+@code {
+    [CascadingParameter] public required MaxiControlPanelContainer Container { get; init;}
+    [Parameter] public TileStatusEnum ListStatus { get; init; }
+    [Parameter] public required TileStatusEnum[] AllowedStatuses { get; init; }
+    [Parameter] public required TileTypeEnum[] AllowedTypes { get; init; }
+    [Parameter] public required string Id { get; init; }
+    [Parameter] public required string Title { get; init; }
+    [Parameter] public string? DefaultEmptyMessage { get; init; }
+
+    List<TileModel> Tiles = new List<TileModel>();
+    string dropClass = "";
+    int dragCounter = 0;
+
+    protected override void OnParametersSet()
+    {
+        Tiles.Clear();
+        Container.ChosenCount = 0;
+
+        if (ListStatus == TileStatusEnum.Chosen)
+        {
+            int[] ChosenTilesVals = new int[0];
+
+            foreach (var item in Container.Tiles)
+            {
+                if (item.Status == TileStatusEnum.ChosenSmall || item.Status == TileStatusEnum.ChosenLarge)
+                {
+                    Tiles.Add(item);
+                    Container.ChosenCount++;
+                    ChosenTilesVals = AddItemToIntArray(ChosenTilesVals, item.Caption); //update chosen numbers here.
+                }
+            }
+            Container.ChosenTilesValues = ChosenTilesVals;
+        }
+        else
+        {
+            Tiles.AddRange(Container.Tiles.Where(x => x.Status == ListStatus));
+        }
+    }
+
+
+    private void HandleDragEnter()//used to set css of the drop zones.
+    {
+        dragCounter++;
+
+        if (ListStatus == Container.Payload.Status) return;
+        if (ListStatus == TileStatusEnum.Chosen && (Container.Payload.Status == TileStatusEnum.ChosenSmall || Container.Payload.Status == TileStatusEnum.ChosenLarge))
+        {
+            dropClass = "";
+            return;
+        }
+
+        if (ListStatus == TileStatusEnum.Chosen && Container.ChosenCount == 6) //if 6 items chosen, can't choose more!
+        {
+            dropClass = "no-maxidrop";
+            return;
+        }
+
+
+        if (AllowedStatuses is not null && !AllowedStatuses.Contains(Container.Payload.Status))
+        {
+            dropClass = "no-maxidrop";
+        }
+        else
+        {
+            dropClass = "can-maxidrop";
+        }
+    }
+
+
+    private void HandleDragLeave() //used to unset css of the drop zones.
+    {
+        dragCounter--;
+
+        if (dragCounter == 0)
+        {
+            dropClass = "";
+        }
+    }
+
+
+    private async Task HandleDrop()
+    {
+        dragCounter = 0;
+        dropClass = "";
+        if (AllowedStatuses is not null && !AllowedStatuses.Contains(Container.Payload.Status))
+        {
+            toastSvc.ShowWarning("You can't drop that there.");
+            return;
+        }
+
+        if (ListStatus == TileStatusEnum.Chosen && Container.ChosenCount == 6)
+        {
+            toastSvc.ShowWarning("6 tiles already chosen.");
+            return; //don't allow more than 6 chosen items
+        }
+
+        //This is a bodge until I figure out how to handle this after the event has completed. On five items already having
+        //been chosen, enable the solve button on dropping in the sixth. Disable the button when dropping it elsewhere when 6 items chosen.
+        if (ListStatus == TileStatusEnum.UnchosenSmall || ListStatus == TileStatusEnum.UnchosenLarge)
+        {
+            if (Container.ChosenCount == 6)
+            {
+                Container.IsSolveDisabled = true;
+            }
+        }
+        else if (ListStatus == TileStatusEnum.Chosen)
+        {
+            if (Container.ChosenCount == 5)
+            {
+                Container.IsSolveDisabled = false;
+            }
+        }
+
+        await Container.UpdateTileAsync(ListStatus);  //make sure a tile is allowed to be dropped, and if so, update its status.
+    }
+
+
+    private static int[] AddItemToIntArray(int[] intArray, string value)
+    {
+        if (int.TryParse(value, out int number))
+        {
+            List<int> list = intArray.ToList();
+            list.Add(number);
+            return list.OrderByDescending(x => x).ToArray();
+        }
+        return new int[0];
+    }
+
+}
