@@ -12,22 +12,24 @@
 
 .miniDropzone {
     padding: 4px;
-    background-color: black;
     border: 1px dashed #75868a;
     border-radius: 4px;
     min-height: 44px;
     list-style: none;
 }
 
-    .miniDropzone span {
-        color: slategray;
+    .miniDropzone span.dropZoneSpan {
+        color: black;
         width: 210px;
     }
 
 
+
+
+
 #chosenMiniTiles {
     max-width: 214px;
-    background-color: aliceblue;
+    background-color: white;
 }
 
 

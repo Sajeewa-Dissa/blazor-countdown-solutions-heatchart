@@ -9,7 +9,6 @@
     .summaryAndKey {
         display: grid;
         grid-gap: 50px;
-        background-color: mediumpurple;
         grid-template-columns: 5fr 3fr;
     }
 
@@ -18,7 +17,6 @@
         }
 
     .mainWrapper {
-        background-color: red;
         min-width: 924px;
         min-height: 528px;
         max-width: 924px;
@@ -55,7 +53,6 @@
     .summaryAndKey {
         display: flex;
         flex-direction: column;
-        background-color: mediumpurple;
     }
 
         .summaryAndKey p {
@@ -63,7 +60,6 @@
         }
 
     .mainWrapper {
-        background-color: red;
         min-width: max-content;
     }
 
@@ -96,11 +92,9 @@
     .summaryAndKey {
         display: flex;
         flex-direction: column;
-        background-color: mediumpurple;
     }
 
     .mainWrapper {
-        background-color: red;
         min-width: max-content;
     }
 
@@ -132,11 +126,9 @@
     .summaryAndKey {
         display: flex;
         flex-direction: column;
-        background-color: mediumpurple;
     }
 
     .mainWrapper {
-        background-color: red;
         min-width: max-content;
     }
 

@@ -1,4 +1,5 @@
 ﻿@namespace BlazrCountdownApp.Components
+@inject IToastService toastSvc
 
 <div class="miniControlPanel-wrapper">
     <div>
@@ -6,7 +7,7 @@
             @ChildContent
         </CascadingValue>
     </div>
-    <button class="btn btn-primary" @onclick="OnSolveButtonClicked" disabled="@IsSolveDisabled">Solve All</button>
+    <button class="btn btn-primary" @ontouchstart="OnSolveButtonTouch" @onclick="OnSolveButtonClicked" disabled="@IsSolveDisabled">Solve All</button>
     <button class="btn btn-primary" @onclick="OnResetButtonClicked">Reset Page</button>
 </div>
 
@@ -43,6 +44,42 @@
     }
 
 
+    public async Task UpdateTouchTileAsync(TileStatusEnum status)
+    {
+        var Task = Tiles.SingleOrDefault(x => x.Id == Payload.Id);
+        if (Task is not null)
+        {
+            if (status == TileStatusEnum.UnchosenSmall)
+            {
+                Task.Status = TileStatusEnum.ChosenSmall;
+            }
+            else if (status == TileStatusEnum.UnchosenLarge)
+            {
+                Task.Status = TileStatusEnum.ChosenLarge;
+            }
+            else if (status == TileStatusEnum.Chosen && Payload.Type == TileTypeEnum.Small)
+            {
+                Task.Status = TileStatusEnum.UnchosenSmall;
+            }
+            else
+            {
+                Task.Status = TileStatusEnum.UnchosenLarge;
+            }
+
+            if (ChosenTilesValues.Length == 5 && (Task.Status == TileStatusEnum.ChosenSmall || Task.Status == TileStatusEnum.ChosenLarge))
+            {
+                IsSolveDisabled = false;
+            }
+            else
+            {
+                IsSolveDisabled = true;
+            }
+
+            await onStatusUpdated.InvokeAsync(Payload); //emit the event.
+        }
+    }
+
+
     protected async Task OnSolveButtonClicked()
     {
         await SolveButtonClicked.InvokeAsync(ChosenTilesValues);
@@ -52,6 +89,12 @@
     {
         IsSolveDisabled = true;
         await ResetButtonClicked.InvokeAsync(null);
+    }
+
+    protected async Task OnSolveButtonTouch()
+    {
+        await SolveButtonClicked.InvokeAsync(ChosenTilesValues);
+        toastSvc.ShowSuccess("Completed. Please scroll down to view results.");
     }
 
 }

@@ -1,6 +1,8 @@
 ﻿@namespace BlazrCountdownApp.Components
 
-<li class="miniDraggable" draggable="true" title="@TileModel?.Caption" @ondragstart="@(() => HandleDragStart(TileModel!))">
+<li class="miniDraggable" draggable="true" title="@TileModel?.Caption"
+    @ontouchstart="@(() => HandleTileTouch(TileModel!))"
+    @ondragstart="@(() => HandleDragStart(TileModel!))">
     <p class="miniCaption">@TileModel?.Caption</p>
 </li>
 
@@ -9,6 +11,11 @@
     [Parameter] public TileModel? TileModel { get; init; }
 
     private void HandleDragStart(TileModel selectedTile)
+    {
+        Container!.Payload = selectedTile;
+    }
+
+    private void HandleTileTouch(TileModel selectedTile)
     {
         Container!.Payload = selectedTile;
     }

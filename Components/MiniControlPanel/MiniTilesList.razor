@@ -11,7 +11,8 @@
             ondragstart="event.dataTransfer.setData('', event.target.id);"
             @ondrop="HandleDrop"
             @ondragenter="HandleDragEnter"
-            @ondragleave="HandleDragLeave">
+            @ondragleave="HandleDragLeave"
+            @ontouchstart="HandleTilesTouch">
 
             @foreach (var tile in Tiles)
             {
@@ -19,7 +20,7 @@
             }
             @if (Tiles.Count == 0)
             {
-                <span>@DefaultEmptyMessage</span>
+                <span class="dropZoneSpan">@DefaultEmptyMessage</span>
             }
         </ul>
     </div>
@@ -142,6 +143,17 @@
         }
 
         await Container.UpdateTileAsync(ListStatus);  //make sure a tile is allowed to be dropped, and if so, update its status.
+    }
+
+
+    private async Task HandleTilesTouch()
+    {
+        if (Container.ChosenCount == 6 && (ListStatus == TileStatusEnum.UnchosenSmall || ListStatus == TileStatusEnum.UnchosenLarge))
+        {
+            toastSvc.ShowWarning("6 tiles already chosen.");
+            return;
+        }
+        await Container.UpdateTouchTileAsync(ListStatus);
     }
 
 

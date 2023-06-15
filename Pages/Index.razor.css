@@ -2,7 +2,6 @@
     .mainContainer {
         display: flex;
         flex-direction: row;
-        background-color: burlywood;
         height: 75vh;
         max-height: 78vh;
         margin-top: 20px;
@@ -15,6 +14,7 @@
         height: 75vh;
         max-height: 78vh;
         background: url("/images/bot85.png") no-repeat;
+        background-color:blanchedalmond;
         background-size: contain;
     }
 
@@ -26,14 +26,12 @@
     }
 
     .welcomePane {
-        background-color: chocolate;
         display: grid;
         grid-template-columns: 1fr;
         grid-template-rows: 1fr 1fr 1fr;
     }
 
     .resultsPane {
-        background-color: chocolate;
         display: grid;
         grid-template-columns: 1fr;
         grid-template-rows: 1fr 6fr;
@@ -42,7 +40,6 @@
     }
 
     .gridContainer {
-        background-color: aquamarine;
         min-width: 924px;
         min-height: 592px;
         max-width: 924px;
@@ -50,7 +47,6 @@
     }
 
     .instructionPara {
-        background-color: chartreuse;
         font-size: larger;
         font-weight: 700;
     }
@@ -62,7 +58,6 @@
     .mainContainer {
         display: flex;
         flex-direction: column;
-        background-color: burlywood;
         margin-top: 20px;
     }
 
@@ -73,6 +68,7 @@
         height: 75vh;
         max-height: 78vh;
         background: url("/images/bot85.png") no-repeat;
+        background-color: blanchedalmond;
         background-size: contain;
     }
 
@@ -86,7 +82,6 @@
     }
 
     .gridContainer {
-        background-color: aquamarine;
         min-width: max-content;
     }
 }

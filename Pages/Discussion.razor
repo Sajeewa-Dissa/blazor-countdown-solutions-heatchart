@@ -23,6 +23,8 @@
     static site. These are some of the possibilities of Blazor which is still a developing technology (watch out for Blazor United coming soon).
     </p>
 
+    <h5>The Solving Algorithm</h5>
+
     <p>This app would not be possible without a suitable number-crunching algorithm, and I am grateful to have found 
     <cite><a href="https://www.codeproject.com/Articles/740035/Countdown-Number-Puzzle-Solver">this</a> article by David Hancock</cite> which solves this exact problem.
     I have used most of the algorithm in its original form, only updating the aggregation mechanism to use C# concurrent bags and concurrent dictionaries (instead of 
@@ -39,14 +41,20 @@
     perhaps quarter the number of actual "solutions", although the very definition of what constitutes uniqueness in an arithmetic function is somewhat subjective.
     </p>
 
-    <h4>Ideas For Further Improvements</h4>
+    <h5>Drag and Drop for Touchscreens</h5>
+
+    <p>Blazor does not natively support a full complement of drag events for touchscreens, and to solve this problem requires adding JS InterOP or a library
+    such as MudBlazor (which may use JS in the background anyway). This highlights one of the disadvantages of the Blazor model. To implement a very basic functionaility
+    for touchscreens, this app selects the number tiles as soon as they are touched (so does not use drag and drop fully).
+    </p>
+
+    <h5>Ideas For Further Improvements</h5>
 
     <ul>
         <li>Change the solution-finding algorithm to reduce the number of duplicate solutions</li>
         <li>Re-work this app as a multi-threaded client-side WASM when the technology allows</li>
-        <li>Make the app properly responsive for mobile devices with special attention to drag-drop and scrolling. It currently has a basic responsive layout only. </li>
+        <li>Make the app properly responsive for mobile devices with special attention to drag-drop and scrolling (or showing results in a new window). It currently has a basic responsive layout only. </li>
     </ul>
-
 </main>
 
 

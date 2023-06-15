@@ -82,9 +82,16 @@ footer hr {
     margin: 2px;
 }
 
+
 /********************************media specific css******************************************/
 @media (max-width: 800px) {
     footer {
         display:none;
     }
+}
+
+/**********show toast message on mobile devices*********/
+.position-topleft, .position-topright, .position-topcenter, .position-bottomleft, .position-bottomright, .position-bottomcenter {
+    top: 50vh !important;
+    left: 10vw !important;
 }
